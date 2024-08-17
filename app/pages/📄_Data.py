@@ -1,9 +1,11 @@
-import importlib
+# import importlib
+import sys
 
 # requests doesn't run in pyodide
-if importlib.util.find_spec("pyodide") is not None:
-    import micropip
-    micropip.install('pyodide-http')
+# if importlib.util.find_spec("pyodide") is not None:
+if hasattr(sys, 'platform') and sys.platform == 'emscripten':
+    # import micropip
+    # micropip.install('')
     import pyodide_http
     pyodide_http.patch_all()  # Patch all libraries
 
