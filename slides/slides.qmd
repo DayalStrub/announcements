@@ -1,0 +1,45 @@
+---
+title: "CMA Announcements"
+format: 
+    revealjs:
+        embed-resources: true  
+---
+
+## Task
+
+### Use case
+
+
+
+### Idea
+
+Use an LLM (via Bedrock) for labelling, train an efficient model, deploy a small app to interact with the labelled data
+
+### Constraints 
+
+- All self-contained in GH
+
+## Overview: Processing
+
+![](overview.drawio.png)
+
+## Overview: Serving
+
+![](overview-app.drawio.png)
+
+## Details: Processing
+
+## Details: Labelling
+
+## Details: Training
+
+## Details: Automating
+
+## Details: Reviewing
+
+## Next steps
+
+Outstanding
+
+## Considerations
+
