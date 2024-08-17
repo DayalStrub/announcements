@@ -20,13 +20,19 @@
       stlite.mount(
         {
           requirements: ["pandas", "altair"], // Packages to install
-          entrypoint: "app.py", // The target file of the `streamlit run` command
+          entrypoint: "📈_Overview.py", // The target file of the `streamlit run` command
           files: {
-            "app.py": {
-              url: "./app.py"
+            "📈_Overview.py": {
+              url: "./app/📈_Overview.py"
+            },
+            "pages/📄_Data.py": {
+              url: "pages/📄_Data.py"
             },
             "/home/data/cases.csv": {
               url: "./data/cases.csv"
+            },
+            "/home/data/files.csv": {
+              url: "./data/files.csv"
             }
           },
           streamlitConfig: {
