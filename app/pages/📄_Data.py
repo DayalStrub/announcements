@@ -1,13 +1,13 @@
 # import importlib
-import sys
+# import sys
 
-# requests doesn't run in pyodide
-# if importlib.util.find_spec("pyodide") is not None:
-if hasattr(sys, 'platform') and sys.platform == 'emscripten':
-    # import micropip
-    # micropip.install('')
-    import pyodide_http
-    pyodide_http.patch_all()  # Patch all libraries
+# # requests doesn't run in pyodide
+# # if importlib.util.find_spec("pyodide") is not None:
+# if hasattr(sys, 'platform') and sys.platform == 'emscripten':
+#     # import micropip
+#     # micropip.install('')
+#     import pyodide_http
+#     pyodide_http.patch_all()  # Patch all libraries
 
 import base64
 import pandas as pd
