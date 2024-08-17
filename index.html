@@ -17,20 +17,25 @@
     <div id="root"></div>
     <script src="https://cdn.jsdelivr.net/npm/@stlite/mountable@0.63.1/build/stlite.js"></script>
     <script>
-      fetch("app.py")
-            .then((response) => response.text())
-            .then(
-                (app) => stlite.mount(
-                    {
-                        requirements: ["click", "scipy", "plotly"],
-                        entrypoint: "app.py",
-                        files: {
-                            "app.py": app
-                        }
-                    },
-                    document.getElementById("root")
-                )
-            );
+      stlite.mount(
+        {
+          requirements: ["pandas", "altair"], // Packages to install
+          entrypoint: "app.py", // The target file of the `streamlit run` command
+          files: {
+            "app.py": {
+              url: "./app.py"
+            },
+            "data/cases.csv": {
+              url: "./data/cases.csv"
+            }
+          },
+          streamlitConfig: {
+            // Streamlit configuration
+            "client.toolbarMode": "viewer",
+          },
+        },
+        document.getElementById("root"),
+      );
       function Ut(e){const t=window.atob(e),n=t.length,r=new Uint8Array(n);for(let a=0;a<n;a++)r[a]=t.charCodeAt(a);return r}
     </script>
   </body>
