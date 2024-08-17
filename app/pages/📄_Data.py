@@ -1,3 +1,12 @@
+import importlib
+
+# requests doesn't run in pyodide
+if importlib.util.find_spec("pyodide") is not None:
+    import micropip
+    micropip.install('pyodide-http')
+    import pyodide_http
+    pyodide_http.patch_all()  # Patch all libraries
+
 import base64
 import pandas as pd
 import requests
