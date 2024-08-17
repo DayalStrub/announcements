@@ -9,7 +9,7 @@ format:
 
 ### Use case
 
-
+Prepare a structured dataset of CMA cases and announcements (for analysis) by extracting information from documents published online... and automate the process so dataset is always up to date, needs minimal user input, and can be reviewed and managed by an analyst. 
 
 ### Idea
 
@@ -37,9 +37,15 @@ Use an LLM (via Bedrock) for labelling, train an efficient model, deploy a small
 
 ## Details: Reviewing
 
-## Next steps
+## Outstanding & Next steps
 
-Outstanding
+- automated retraining: Docker & fargate/EC2 - what could be done in Github?
+- Better labelleing - argilla on long documents?
+- DVC
+
 
 ## Considerations
 
+- Not a "traditional" ML project/no (simple) data flywheel, so no automated retraining, evaluation, etc.
+- Unclear whether humal labelling (with active learning) would bebetter
+- Give up on GH/model too small
