@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.4
+#       jupytext_version: 1.11.2
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -28,9 +28,9 @@ from pathlib import Path
 # TODO: If use a hash of case title as ID and Parquet datasets, then no need to read in old data to process new data
 
 # %%
-# path_data = Path("").parent.parent.parent / "data"
-df_cases = pd.read_parquet("../data/cases.parquet")
-df_files = pd.read_parquet("../data/files.parquet")
+path_data = Path(__file__).resolve().parent.parent / "data"
+df_cases = pd.read_parquet(path_data / "cases.parquet")
+df_files = pd.read_parquet(path_data / "labels.parquet")
 
 # %%
 n_cases = int(df_cases["id"].max())
