@@ -5,6 +5,8 @@ Project to create a _structured dataset of CMA cases and announcements_ by extra
 
 __Note:__ Still WIP. App requests are broken. Pipeline is not complete. Tiny classifier (that can run in Actions) is still a figment of my imagination.
 
+![](slides/overview.png)
+
 ## Development
 
 ### Scripts

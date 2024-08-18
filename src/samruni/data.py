@@ -10,25 +10,31 @@ import pandas as pd
 import requests
 from typing import List
 
+
 def list_cases():
     "Get yesterday's cases from RSS feed"
     # TODO move URL to config file?
     url = "https://www.gov.uk/cma-cases.atom?case_type%5B%5D=mergers&case_state%5B%5D=closed"
     response = feedparser.parse(url)
-    date_updated = datetime.strptime(response["feed"]["updated"], "%Y-%m-%dT%H:%M:%S%z").date()
+    date_updated = datetime.strptime(
+        response["feed"]["updated"], "%Y-%m-%dT%H:%M:%S%z"
+    ).date()
     date_yesterday = datetime.now().date() - timedelta(days=1)
     cases = []
     if date_updated >= date_yesterday:
         for e in response.entries:
-            date_case_update = datetime.strptime(e.updated, "%Y-%m-%dT%H:%M:%S%z").date()
+            date_case_update = datetime.strptime(
+                e.updated, "%Y-%m-%dT%H:%M:%S%z"
+            ).date()
             if date_case_update > date_yesterday:
                 tmp = {
-                "title": e.title,
-                # "date_updated": date_case_update,
-                "link": e.link
+                    "title": e.title,
+                    # "date_updated": date_case_update,
+                    "link": e.link,
                 }
                 cases.append(tmp)
     return cases
+
 
 def collect_cases(cases):
     "Collect data about cases"
@@ -41,6 +47,7 @@ def collect_cases(cases):
             f["id"] = c["id"]
             files.append(f)
     return cases_updated, files
+
 
 @dataclass
 class Case:
