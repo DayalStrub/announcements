@@ -31,7 +31,7 @@ st.markdown("## All cases")
 df_cases = pd.read_parquet(path_data / "cases.parquet")
 df_labels = pd.read_parquet(path_data / "labels.parquet")
 
-df_cases = df_cases.merge(df_labels, how = "left")
+df_cases = df_cases.merge(df_labels, how="left")
 
 interactive_table(df_cases, maxBytes=0)
 
@@ -43,17 +43,19 @@ selected_case = st.selectbox("Select case", df_cases["title"].sort_values())
 selected_case_id = df_cases.loc[df_cases["title"] == selected_case, "id"].item()
 selected_case_toh = df_cases.loc[df_cases["title"] == selected_case, "concern"].item()
 
+
 def update_toh(feedback):
     # TODO dicretly create PR?
     pass
 
-col1, col2, col3 = st.columns([8,1,1])
+
+col1, col2, col3 = st.columns([8, 1, 1])
 with col1:
     st.markdown(f"Theory of harm type: **{selected_case_toh}**")
 with col2:
-    st.button(':thumbsup:', on_click=update_toh, args=('Positive',), key='thumbsup')
+    st.button(":thumbsup:", on_click=update_toh, args=("Positive",), key="thumbsup")
 with col3:
-    st.button(':thumbsdown:', on_click=update_toh, args=('Negative',), key='thumbsdown')
+    st.button(":thumbsdown:", on_click=update_toh, args=("Negative",), key="thumbsdown")
 
 ## Files
 
@@ -63,7 +65,9 @@ df_files_filtered = df_files.loc[df_files["id"] == selected_case_id]
 
 selected_file = st.selectbox("Select file", df_files_filtered["title"].sort_values())
 
-url = df_files_filtered.loc[df_files_filtered["title"] == selected_file, "link"].values[0]
+url = df_files_filtered.loc[df_files_filtered["title"] == selected_file, "link"].values[
+    0
+]
 
 response = requests.get(url)
 bytes_data = response.content
