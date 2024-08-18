@@ -1,51 +1,77 @@
 ---
-title: "CMA Announcements"
+title: "CMA Cases"
+author: https://github.com/DayalStrub/announcements
 format: 
     revealjs:
-        embed-resources: true  
+        embed-resources: true
+        preview-links: auto
+        slide-number: true
 ---
 
 ## Task
 
 ### Use case
 
-Prepare a structured dataset of CMA cases and announcements (for analysis) by extracting information from documents published online... and automate the process so dataset is always up to date, needs minimal user input, and can be reviewed and managed by an analyst. 
+Prepare _structured dataset of CMA cases and announcements (for analysis)_ by extracting information from documents published online... and automate process so dataset is always fresh, needs minimal user input, and can be managed by an analyst. 
 
 ### Idea
 
-Use an LLM (via Bedrock) for labelling, train an efficient model, deploy a small app to interact with the labelled data
+Use LLM for labelling; train efficient model to run in GitHub Actions; deploy small app to interact with dataset.
 
-### Constraints 
+__Goals:__ _Simple, efficient, self-contained._
 
-- All self-contained in GH
+## Overview: High level diagram
 
-## Overview: Processing
+![](overview.png)
 
-![](overview.drawio.png)
+## Overview: Data
 
-## Overview: Serving
+* Goals:
+  * Avoid data storage: collect PDF URLs, not files
+  * Simplify format: use Parquet files (or datasets)
+  * Avoid AWS
+* _One off bulk collection of old cases_
+* GH Action on cron to collect new cases from RSS
+  _https://www.gov.uk/cma-cases.atom?case_state%5B%5D=closed&case_type%5B%5D=mergers_
+  * Simple class to parse case pages
+    TODO CODE
+  * Create PR with new data for manual review
+  * Add Pydantic validation, error handling, etc.
 
-![](overview-app.drawio.png)
+## Overview: Labels
 
-## Details: Processing
+* Situation: No labels, large documents, ...
+* Focus on _merger cases_: competitor names (NER), theory of harm type (class)
+* Use Claude & instructor to bulk label old cases
+  TODO CODE
 
-## Details: Labelling
+## Overview: App
 
-## Details: Training
+* Need way to view results, and review labels
+* Idea: 
+  * [Simple app](https://dayalstrub.github.io/announcements/){preview-link="true" style="text-align: center"} for analysts with "no" hosting 
+  * Reviewing labels creates PR to update data using ghapi
 
-## Details: Automating
+## Overview: Model
 
-## Details: Reviewing
+* Post bulk labelling, need to classify new cases regularly
+* LLMs inefficient and costly
+* Ideas:
+  * Use LLM labels (and then human reviews) to train a more efficient TODO model
+  * Build a Docker image and push to ghcr.io to use in GitHub Actions
+
+## Overview: Metrics
+
+* Use LLM labels to evalute trained model initially
+* Then use human reviews/labels to evaluate model, and once sufficient also retrain
+* Note:
+  * Not a "traditional" ML project/no (simple) data flywheel, so no real automated retraining, evaluation, etc.
+  * Unclear whether human labelling (with active learning) would better than LLM solution from start
 
 ## Outstanding & Next steps
 
-- automated retraining: Docker & fargate/EC2 - what could be done in Github?
-- Better labelleing - argilla on long documents?
-- DVC
-
-
-## Considerations
-
-- Not a "traditional" ML project/no (simple) data flywheel, so no automated retraining, evaluation, etc.
-- Unclear whether humal labelling (with active learning) would bebetter
-- Give up on GH/model too small
+- automated retraining: Docker & fargate/EC2 - what could be done in GitHub?
+- Better labelleing with _argilla_ - how to use on long documents?
+- _DVC_ for data and model versioning, as dataset small - worth it?
+- ...
+- Give up on "GitHub solution" - embrace LLMs, or deploy decent model with SageMaker Serverless; and rethink data and app
