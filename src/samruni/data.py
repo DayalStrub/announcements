@@ -19,7 +19,7 @@ def list_cases():
     date_updated = datetime.strptime(
         response["feed"]["updated"], "%Y-%m-%dT%H:%M:%S%z"
     ).date()
-    date_yesterday = datetime.now().date() - timedelta(days=10)
+    date_yesterday = datetime.now().date() - timedelta(days=1)
     cases = []
     if date_updated >= date_yesterday:
         for e in response.entries:
