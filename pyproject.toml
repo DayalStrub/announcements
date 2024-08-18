@@ -16,7 +16,8 @@ classifiers = [
 dependencies = [
     "bs4",
     "feedparser",
-    "pandas"
+    "pandas",
+    "requests"
 ]
 
 [project.optional-dependencies]
