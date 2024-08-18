@@ -30,7 +30,7 @@ from pathlib import Path
 # %%
 path_data = Path(__file__).resolve().parent.parent / "data"
 df_cases = pd.read_parquet(path_data / "cases.parquet")
-df_files = pd.read_parquet(path_data / "labels.parquet")
+df_files = pd.read_parquet(path_data / "files.parquet")
 
 # %%
 n_cases = int(df_cases["id"].max())
@@ -61,9 +61,9 @@ df_files_full = pd.concat([df_files, df_files_new])
 # ## Update cases
 
 # %%
-df_cases_full.to_parquet("../data/cases.parquet")
+df_cases_full.to_parquet(path_data / "cases.parquet")
 
 # %%
-df_files_full.to_parquet("../data/files.parquet")
+df_files_full.to_parquet(path_data / "files.parquet")
 
 # %%
