@@ -28,9 +28,9 @@ __Goals:__ _Simple, efficient, self-contained._
   * _Avoid data storage_: collect PDF URLs, not files
   * _Simplify format_: use Parquet files (or datasets)
   * _Avoid AWS (S3)_
-* One off bulk collection of [old cases](https://www.gov.uk/cma-cases?case_state%5B%5D=closed&case_type%5B%5D=mergers&page=2)
+* One off bulk collection of [old cases](https://www.gov.uk/cma-cases?case_state%5B%5D=closed&case_type%5B%5D=mergers&page=2){preview-link="false"}
 
-* [GH Action](https://github.com/DayalStrub/announcements/blob/main/.github/workflows/pipeline.yaml) on cron to collect new cases from RSS
+* [GH Action](https://github.com/DayalStrub/announcements/blob/main/.github/workflows/pipeline.yaml){preview-link="false"} on cron to collect new cases from RSS
   * Simple class to parse case pages
   * Action creates PR with new data for manual review
   * _Missing:_ Pydantic validation, error handling, etc.
@@ -40,7 +40,7 @@ __Goals:__ _Simple, efficient, self-contained._
 * Situation: 
   * No labels, large PDF documents, ...
   * Require competitor names (NER), theory of harm type (class) - Focus on _merger cases_ only
-* Use Claude & instructor to [bulk label](https://github.com/DayalStrub/announcements/blob/main/scripts/1_bulk_label.py) old cases
+* Use Claude & instructor to [bulk label](https://github.com/DayalStrub/announcements/blob/main/scripts/1_bulk_label.py){preview-link="false"} old cases
 
 ## Overview: App
 
