@@ -16,7 +16,7 @@ classifiers = [
 dependencies = [
     "bs4",
     "feedparser",
-    "pandas",
+    "pandas[parquet]",
     "requests"
 ]
 
