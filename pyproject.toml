@@ -16,12 +16,12 @@ classifiers = [
 
 [options]
 install_requires = [
-    bs4,
-    feedparser,
-    pandas
+    "bs4",
+    "feedparser",
+    "pandas"
 ]
 
 [options.extras_require]
 test = [
-    pytest,
+    "pytest"
 ]
