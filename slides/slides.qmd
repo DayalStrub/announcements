@@ -1,18 +1,16 @@
 ---
-title: "CMA Cases"
+title: "CMA Cases Pipeline"
 author: https://github.com/DayalStrub/announcements
 format: 
     revealjs:
         embed-resources: true
-        preview-links: auto
+        preview-links: true
         slide-number: true
 ---
 
 ## Task
 
-### Use case
-
-Prepare _structured dataset of CMA cases and announcements (for analysis)_ by extracting information from documents published online... and automate process so dataset is always fresh, needs minimal user input, and can be managed by an analyst. 
+Prepare _structured dataset of CMA cases and announcements (for analysis)_ by extracting information from documents published online... and automate so data is always fresh, process needs minimal user input, and can be managed by an analyst. 
 
 ### Idea
 
@@ -27,51 +25,53 @@ __Goals:__ _Simple, efficient, self-contained._
 ## Overview: Data
 
 * Goals:
-  * Avoid data storage: collect PDF URLs, not files
-  * Simplify format: use Parquet files (or datasets)
-  * Avoid AWS
-* _One off bulk collection of old cases_
-* GH Action on cron to collect new cases from RSS
-  _https://www.gov.uk/cma-cases.atom?case_state%5B%5D=closed&case_type%5B%5D=mergers_
+  * _Avoid data storage_: collect PDF URLs, not files
+  * _Simplify format_: use Parquet files (or datasets)
+  * _Avoid AWS (S3)_
+* One off bulk collection of [old cases](https://www.gov.uk/cma-cases?case_state%5B%5D=closed&case_type%5B%5D=mergers&page=2)
+
+* [GH Action](https://github.com/DayalStrub/announcements/blob/main/.github/workflows/pipeline.yaml) on cron to collect new cases from RSS
   * Simple class to parse case pages
-    TODO CODE
-  * Create PR with new data for manual review
-  * Add Pydantic validation, error handling, etc.
+  * Action creates PR with new data for manual review
+  * _Missing:_ Pydantic validation, error handling, etc.
 
 ## Overview: Labels
 
-* Situation: No labels, large documents, ...
-* Focus on _merger cases_: competitor names (NER), theory of harm type (class)
-* Use Claude & instructor to bulk label old cases
-  TODO CODE
+* Situation: 
+  * No labels, large PDF documents, ...
+  * Require competitor names (NER), theory of harm type (class) - Focus on _merger cases_ only
+* Use Claude & instructor to [bulk label](https://github.com/DayalStrub/announcements/blob/main/scripts/1_bulk_label.py) old cases
 
 ## Overview: App
 
 * Need way to view results, and review labels
 * Idea: 
   * [Simple app](https://dayalstrub.github.io/announcements/){preview-link="true" style="text-align: center"} for analysts with "no" hosting 
-  * Reviewing labels creates PR to update data using ghapi
+  * _Missing:_ Reviewing labels creates PR, using ghapi, for manual review of updated data
 
 ## Overview: Model
 
-* Post bulk labelling, need to classify new cases regularly
+* Post bulk labelling, need to classify new cases from RSS feed regularly
 * LLMs inefficient and costly
-* Ideas:
-  * Use LLM labels (and then human reviews) to train a more efficient TODO model
+* Idea:
+  * Use LLM labels (and then human reviews) to train a more efficient model
   * Build a Docker image and push to ghcr.io to use in GitHub Actions
 
 ## Overview: Metrics
 
 * Use LLM labels to evalute trained model initially
-* Then use human reviews/labels to evaluate model, and once sufficient also retrain
+* Use human reviews/labels to evaluate model, and once sufficient also retrain
 * Note:
-  * Not a "traditional" ML project/no (simple) data flywheel, so no real automated retraining, evaluation, etc.
-  * Unclear whether human labelling (with active learning) would better than LLM solution from start
+  * Not a "traditional" ML project/no (simple) data flywheel, so no automated retraining, evaluation, etc.
+  * Unclear whether human labelling (e.g. with active learning) would better than LLM solution from the start
 
-## Outstanding & Next steps
+## Next steps
 
-- automated retraining: Docker & fargate/EC2 - what could be done in GitHub?
+- _Finish the outstanding steps!_
+- Automated retraining - what could be done in GitHub Actions?
 - Better labelleing with _argilla_ - how to use on long documents?
 - _DVC_ for data and model versioning, as dataset small - worth it?
-- ...
-- Give up on "GitHub solution" - embrace LLMs, or deploy decent model with SageMaker Serverless; and rethink data and app
+
+Or...
+
+- Give up on "GitHub solution" - embrace LLMs, or deploy decent model with SageMaker Serverless; and rethink data and app?!
