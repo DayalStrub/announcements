@@ -19,7 +19,7 @@
     <script>
       stlite.mount(
         {
-          requirements: ["pandas", "altair", "pyodide-http", "requests"], // Packages to install
+          requirements: ["altair", "itables", "pandas", "requests"], // Packages to install
           entrypoint: "📈_Overview.py", // The target file of the `streamlit run` command
           files: {
             "📈_Overview.py": {
@@ -28,11 +28,14 @@
             "pages/📄_Data.py": {
               url: "./app/pages/📄_Data.py"
             },
-            "/home/data/cases.csv": {
-              url: "./data/cases.csv"
+            "/home/data/cases.parquet": {
+              url: "./data/cases.parquet"
             },
-            "/home/data/files.csv": {
-              url: "./data/files.csv"
+            "/home/data/files.parquet": {
+              url: "./data/files.parquet"
+            },
+            "/home/data/labels.parquet": {
+              url: "./data/labels.parquet"
             }
           },
           streamlitConfig: {

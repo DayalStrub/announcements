@@ -7,25 +7,29 @@ import pandas as pd
 from pathlib import Path
 import streamlit as st
 
+st.set_page_config(layout="wide")
+
 st.title("CMA Cases: Overview")
 
-file_path = Path(__file__).resolve().parent
+path_data = Path(__file__).resolve().parent.parent / "data"
 
-data = pd.read_csv(file_path.parent / "data/cases.csv")
+# prepare data
+data_cases = pd.read_parquet(path_data / "cases.parquet")
+data_labels = pd.read_parquet(path_data / "labels.parquet")
 
-# Compute the year from the date_closed variable
-data['year'] = pd.to_datetime(data['date_closed']).dt.year
+data = data_cases.merge(data_labels, how = "left")
 
-# Group the data by 'toh' and count the number of cases
-grouped_data = data.groupby(["year",'toh']).size().reset_index(name='count')
+data['year'] = pd.to_datetime(data['closed']).dt.year
 
-# Plot the chart using Altair
+grouping = st.selectbox("Select grouping", ["concern", "market_sector"])
+
+# plot counts over time by toh
 chart = alt.Chart(data).mark_bar().encode(
     y='count()',
     x='year:O',
-    color='toh',
-    tooltip=["name", "toh", "year"]
-)
+    color=grouping,
+    tooltip=["title", "concern", "market_sector", "year"]
+).properties(height=700).interactive()
 
 # Display the chart in Streamlit
 st.altair_chart(chart, use_container_width=True)

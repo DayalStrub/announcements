@@ -1,3 +1,7 @@
+"""
+Page for single case review
+"""
+
 # import importlib
 # import sys
 
@@ -10,35 +14,37 @@
 #     pyodide_http.patch_all()  # Patch all libraries
 
 import base64
+from itables.streamlit import interactive_table
 import pandas as pd
+from pathlib import Path
 import requests
 import streamlit as st
 
-
 st.title("CMA Cases: Data")
 
-from pathlib import Path
-
-file_path = Path(__file__).resolve().parent
+path_data = Path(__file__).resolve().parent.parent.parent / "data"
 
 # Cases
 
 st.markdown("## All cases")
 
-df_cases = pd.read_csv(file_path.parent.parent / "data/cases.csv")
+df_cases = pd.read_parquet(path_data / "cases.parquet")
+df_labels = pd.read_parquet(path_data / "labels.parquet")
 
-st.dataframe(df_cases)
+df_cases = df_cases.merge(df_labels, how = "left")
 
-# Case
+interactive_table(df_cases, maxBytes=0)
+
+# Single Case
 
 st.markdown("## Case information")
 
-selected_case = st.selectbox("Select case", df_cases["name"].sort_values())
-selected_case_id = df_cases.loc[df_cases["name"] == selected_case, "id"].item()
-selected_case_toh = df_cases.loc[df_cases["name"] == selected_case, "toh"].item()
+selected_case = st.selectbox("Select case", df_cases["title"].sort_values())
+selected_case_id = df_cases.loc[df_cases["title"] == selected_case, "id"].item()
+selected_case_toh = df_cases.loc[df_cases["title"] == selected_case, "concern"].item()
 
 def update_toh(feedback):
-    # TODO
+    # TODO dicretly create PR?
     pass
 
 col1, col2, col3 = st.columns([8,1,1])
@@ -51,15 +57,13 @@ with col3:
 
 ## Files
 
-df_files = pd.read_csv(file_path.parent.parent / "data/files.csv")
+df_files = pd.read_parquet(path_data / "files.parquet")
 
 df_files_filtered = df_files.loc[df_files["id"] == selected_case_id]
 
-selected_file = st.selectbox("Select file", df_files_filtered["name"].sort_values())
+selected_file = st.selectbox("Select file", df_files_filtered["title"].sort_values())
 
-# uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
-
-url = df_files_filtered.loc[df_files_filtered["name"] == selected_file, "url"].values[0]
+url = df_files_filtered.loc[df_files_filtered["title"] == selected_file, "link"].values[0]
 
 response = requests.get(url)
 bytes_data = response.content
