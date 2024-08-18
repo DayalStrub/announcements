@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "samruni"
+version = "0.0.0.9000"
+description = "A small package to process mergers"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: The Unlicense",
+    "Operating System :: OS Independent",
+]
+
+[options]
+install_requires = [
+    bs4,
+    feedparser,
+    pandas
+]
+
+[options.extras_require]
+test = [
+    pytest,
+]
