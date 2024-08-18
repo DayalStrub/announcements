@@ -1,6 +1,9 @@
-Project to create a _structured dataset of CMA cases and announcements_ by extracting information from documents published online... but actually to see how far can you go with "just" GitHub to run a data pipeline with an NLP element to it using Actions, serve a [streamlit app](https://dayalstrub.github.io/announcements/) using Pages, and develop in Codespaces.
+Project to create a _structured dataset of CMA cases and announcements_ by extracting information from documents published online... actually aim is to see how far can you go with "just" GitHub to:
+* run a data pipeline with an NLP element to it using Actions,
+* serve a [streamlit app](https://dayalstrub.github.io/announcements/) using Pages, and 
+* develop ML pipelines in Codespaces.
 
-Note: Still WIP. App requests are broken. Pipeline is not complete. Tiny classifier (that can run in Actions) is still a figment of my imagination.
+__Note:__ Still WIP. App requests are broken. Pipeline is not complete. Tiny classifier (that can run in Actions) is still a figment of my imagination.
 
 ## Development
 
