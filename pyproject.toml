@@ -13,15 +13,13 @@ classifiers = [
     "License :: OSI Approved :: The Unlicense",
     "Operating System :: OS Independent",
 ]
-
-[options]
-install_requires = [
+dependencies = [
     "bs4",
     "feedparser",
     "pandas"
 ]
 
-[options.extras_require]
+[project.optional-dependencies]
 test = [
     "pytest"
 ]
